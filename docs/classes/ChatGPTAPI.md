@@ -8,11 +8,13 @@
 
 - [constructor](ChatGPTAPI.md#constructor)
 
+### Accessors
+
+- [apiKey](ChatGPTAPI.md#apikey)
+- [apiOrg](ChatGPTAPI.md#apiorg)
+
 ### Methods
 
-- [ensureAuth](ChatGPTAPI.md#ensureauth)
-- [getIsAuthenticated](ChatGPTAPI.md#getisauthenticated)
-- [refreshAccessToken](ChatGPTAPI.md#refreshaccesstoken)
 - [sendMessage](ChatGPTAPI.md#sendmessage)
 
 ## Constructors
@@ -21,87 +23,106 @@
 
 • **new ChatGPTAPI**(`opts`)
 
-Creates a new client wrapper around the unofficial ChatGPT REST API.
+Creates a new client wrapper around OpenAI's chat completion API, mimicing the official ChatGPT webapp's functionality as closely as possible.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `opts` | `Object` | - |
-| `opts.apiBaseUrl?` | `string` | **`Default Value`**  `'https://chat.openai.com/api'` * |
-| `opts.backendApiBaseUrl?` | `string` | **`Default Value`**  `'https://chat.openai.com/backend-api'` * |
-| `opts.markdown?` | `boolean` | **`Default Value`**  `true` * |
-| `opts.sessionToken` | `string` | = **Required** OpenAI session token which can be found in a valid session's cookies (see readme for instructions) |
-| `opts.userAgent?` | `string` | **`Default Value`**  `'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'` * |
+| Name | Type |
+| :------ | :------ |
+| `opts` | [`ChatGPTAPIOptions`](../modules.md#chatgptapioptions) |
 
 #### Defined in
 
-[chatgpt-api.ts:31](https://github.com/transitive-bullshit/chatgpt-api/blob/80d77a3/src/chatgpt-api.ts#L31)
+[src/chatgpt-api.ts:51](https://github.com/transitive-bullshit/chatgpt-api/blob/fb06beb/src/chatgpt-api.ts#L51)
+
+## Accessors
+
+### apiKey
+
+• `get` **apiKey**(): `string`
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[src/chatgpt-api.ts:345](https://github.com/transitive-bullshit/chatgpt-api/blob/fb06beb/src/chatgpt-api.ts#L345)
+
+• `set` **apiKey**(`apiKey`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `apiKey` | `string` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/chatgpt-api.ts:349](https://github.com/transitive-bullshit/chatgpt-api/blob/fb06beb/src/chatgpt-api.ts#L349)
+
+___
+
+### apiOrg
+
+• `get` **apiOrg**(): `string`
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[src/chatgpt-api.ts:353](https://github.com/transitive-bullshit/chatgpt-api/blob/fb06beb/src/chatgpt-api.ts#L353)
+
+• `set` **apiOrg**(`apiOrg`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `apiOrg` | `string` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[src/chatgpt-api.ts:357](https://github.com/transitive-bullshit/chatgpt-api/blob/fb06beb/src/chatgpt-api.ts#L357)
 
 ## Methods
 
-### ensureAuth
-
-▸ **ensureAuth**(): `Promise`<`string`\>
-
-#### Returns
-
-`Promise`<`string`\>
-
-#### Defined in
-
-[chatgpt-api.ts:74](https://github.com/transitive-bullshit/chatgpt-api/blob/80d77a3/src/chatgpt-api.ts#L74)
-
-___
-
-### getIsAuthenticated
-
-▸ **getIsAuthenticated**(): `Promise`<`boolean`\>
-
-#### Returns
-
-`Promise`<`boolean`\>
-
-#### Defined in
-
-[chatgpt-api.ts:65](https://github.com/transitive-bullshit/chatgpt-api/blob/80d77a3/src/chatgpt-api.ts#L65)
-
-___
-
-### refreshAccessToken
-
-▸ **refreshAccessToken**(): `Promise`<`string`\>
-
-#### Returns
-
-`Promise`<`string`\>
-
-#### Defined in
-
-[chatgpt-api.ts:165](https://github.com/transitive-bullshit/chatgpt-api/blob/80d77a3/src/chatgpt-api.ts#L165)
-
-___
-
 ### sendMessage
 
-▸ **sendMessage**(`message`, `opts?`): `Promise`<`string`\>
+▸ **sendMessage**(`text`, `opts?`): `Promise`<[`ChatMessage`](../interfaces/ChatMessage.md)\>
 
-Sends a message to ChatGPT, waits for the response to resolve, and returns
-the response.
+Sends a message to the OpenAI chat completions endpoint, waits for the response
+to resolve, and returns the response.
+
+If you want your response to have historical context, you must provide a valid `parentMessageId`.
+
+If you want to receive a stream of partial responses, use `opts.onProgress`.
+
+Set `debug: true` in the `ChatGPTAPI` constructor to log more info on the full prompt sent to the OpenAI chat completions API. You can override the `systemMessage` in `opts` to customize the assistant's instructions.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `message` | `string` | The plaintext message to send. |
-| `opts` | `Object` | - |
-| `opts.conversationId?` | `string` | Optional ID of the previous message in a conversation |
-| `opts.onProgress?` | (`partialResponse`: `string`) => `void` | - |
+| Name | Type |
+| :------ | :------ |
+| `text` | `string` |
+| `opts` | [`SendMessageOptions`](../modules.md#sendmessageoptions) |
 
 #### Returns
 
-`Promise`<`string`\>
+`Promise`<[`ChatMessage`](../interfaces/ChatMessage.md)\>
+
+The response from ChatGPT
 
 #### Defined in
 
-[chatgpt-api.ts:86](https://github.com/transitive-bullshit/chatgpt-api/blob/80d77a3/src/chatgpt-api.ts#L86)
+[src/chatgpt-api.ts:137](https://github.com/transitive-bullshit/chatgpt-api/blob/fb06beb/src/chatgpt-api.ts#L137)

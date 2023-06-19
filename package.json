@@ -1,7 +1,7 @@
 {
   "name": "chatgpt",
-  "version": "1.4.0",
-  "description": "Node.js client for the unofficial ChatGPT API.",
+  "version": "5.2.5",
+  "description": "Node.js client for the official ChatGPT API.",
   "author": "Travis Fischer <travis@transitivebullsh.it>",
   "repository": "transitive-bullshit/chatgpt-api",
   "license": "MIT",
@@ -16,8 +16,10 @@
     }
   },
   "files": [
-    "build"
+    "build",
+    "bin"
   ],
+  "bin": "./bin/cli.js",
   "engines": {
     "node": ">=14"
   },
@@ -32,57 +34,51 @@
     "prepare": "husky install",
     "pre-commit": "lint-staged",
     "test": "run-p test:*",
-    "test:unit": "ava",
     "test:prettier": "prettier '**/*.{js,jsx,ts,tsx}' --check"
   },
   "dependencies": {
-    "eventsource-parser": "^0.0.5",
-    "expiry-map": "^2.0.0",
-    "node-fetch": "2",
-    "remark": "^14.0.2",
-    "strip-markdown": "^5.0.0",
+    "cac": "^6.7.14",
+    "conf": "^11.0.1",
+    "eventsource-parser": "^1.0.0",
+    "js-tiktoken": "^1.0.5",
+    "keyv": "^4.5.2",
+    "p-timeout": "^6.1.1",
+    "quick-lru": "^6.1.1",
+    "read-pkg-up": "^9.1.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@trivago/prettier-plugin-sort-imports": "^4.0.0",
-    "@types/node": "^18.11.9",
-    "@types/node-fetch": "2",
-    "@types/uuid": "^9.0.0",
-    "ava": "^5.1.0",
+    "@keyv/redis": "^2.5.7",
+    "@trivago/prettier-plugin-sort-imports": "^4.1.1",
+    "@types/node": "^18.16.3",
+    "@types/uuid": "^9.0.1",
     "del-cli": "^5.0.0",
     "dotenv-safe": "^8.2.0",
-    "husky": "^8.0.2",
-    "lint-staged": "^13.0.3",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
     "npm-run-all": "^4.1.5",
-    "ora": "^6.1.2",
-    "prettier": "^2.8.0",
-    "tsup": "^6.5.0",
-    "tsx": "^3.12.1",
-    "typedoc": "^0.23.21",
-    "typedoc-plugin-markdown": "^3.13.6",
-    "typescript": "^4.9.3"
+    "ora": "^6.3.0",
+    "prettier": "^2.8.8",
+    "tsup": "^6.7.0",
+    "tsx": "^3.12.7",
+    "typedoc": "^0.24.6",
+    "typedoc-plugin-markdown": "^3.15.3",
+    "typescript": "^5.0.4"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
       "prettier --write"
     ]
   },
-  "ava": {
-    "extensions": {
-      "ts": "module"
-    },
-    "nodeArguments": [
-      "--loader=tsx"
-    ]
-  },
   "keywords": [
     "openai",
     "chatgpt",
+    "chat",
     "gpt",
+    "gpt-3",
     "gpt3",
     "gpt4",
     "chatbot",
-    "chat",
     "machine learning",
     "conversation",
     "conversational ai",
